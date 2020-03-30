@@ -1,7 +1,6 @@
 const webpack = require('webpack')
-const WebpackNotifierPlugin = require('webpack-notifier')
 const StringReplacePlugin = require('string-replace-webpack-plugin')
-const {VueLoaderPlugin} = require('vue-loader')
+const { VueLoaderPlugin } = require('vue-loader')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const utils = require('./utils')
@@ -47,9 +46,7 @@ module.exports = {
       // UglifyJs do not support ES6+, you can also use babel-minify for better treeshaking: https://github.com/babel/minify
       new UglifyJsPlugin({
         uglifyOptions: {
-          compress: {
-            warnings: false,
-          },
+          warnings: false,
         },
         cache: true,
         sourceMap: true,
@@ -77,6 +74,15 @@ module.exports = {
         options: {
           formatter: require('eslint-friendly-formatter'),
         },
+      },
+      {
+        test: /\.(js|vue|s?[ca]ss)$/,
+        loader: utils.compileVarsReplaceLoader(),
+        enforce: 'pre',
+        include: [
+          utils.resolve('src'),
+          utils.resolve('test'),
+        ],
       },
       {
         test: /\.js$/,
@@ -108,15 +114,12 @@ module.exports = {
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin(Object.assign({}, config.replaces, {
       'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
+      'process.env.VUELAYERS_DEBUG': process.env.NODE_ENV !== 'production',
     })),
     new webpack.BannerPlugin({
       banner: config.banner,
       raw: true,
       entryOnly: true,
-    }),
-    new WebpackNotifierPlugin({
-      title: config.fullname,
-      alwaysNotify: false,
     }),
   ],
   performance: {
@@ -131,8 +134,14 @@ module.exports = {
     chunkModules: false,
   },
   devServer: {
-    open: true,
+    open: false,
     hot: true,
     contentBase: config.outputPath,
+    clientLogLevel: 'info',
+    compress: true,
+    overlay: { warnings: false, errors: true },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
 }

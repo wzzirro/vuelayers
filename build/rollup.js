@@ -135,12 +135,7 @@ function bundleOptions (format, package, env = 'development') {
     if (!parentId) {
       return false
     }
-    if (/\.(sass|vue)$/i.test(id)) {
-      return false
-    }
-    // embeddable
-    const embeddableRegExp = /(\.\/|src\/)(install)/i
-    if (embeddableRegExp.test(id)) {
+    if (/\.(sass|s?css|vue)$/i.test(id)) {
       return false
     }
     // check internal component imports
@@ -196,20 +191,16 @@ function bundleOptions (format, package, env = 'development') {
         return false
       }
       options.replaces['process.env.NODE_ENV'] = `'${env}'`
+      options.replaces['process.env.VUELAYERS_DEBUG'] = JSON.stringify(process.env.NODE_ENV !== 'production')
       // options.minify = true
-      // process.env.BABEL_ENV = 'es5-production'
-      // options.defines.IS_STANDALONE = true
       break
     case 'cjs':
       options.input.external = external
       options.patterns = patterns
-      // process.env.BABEL_ENV = 'es5-production'
       break
     case 'es':
       options.input.external = external
       options.patterns = patterns
-      // options.outputPath = path.join(options.outputPath, '_esm')
-      // options.cssName = undefined
       break
   }
 
@@ -238,7 +229,7 @@ function makeBundle (options = {}) {
         indentedSyntax: true,
         includePaths: [
           utils.resolve('src'),
-          utils.resolve('src/sass'),
+          utils.resolve('src/styles'),
           utils.resolve('node_modules'),
         ],
       },

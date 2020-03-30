@@ -6,11 +6,13 @@
 grids organized by zoom levels. It should be used together with tiled source components like
 [`vl-source-xyz`](/docs/component/xyz-source.md), [`vl-source-wmts`](/docs/component/wmts-source.md), [`vl-source-osm`](/docs/component/osm-source.md).
 
-## Versions
+## ES6 Module
 
-`vl-layer-tile` component is a part of **TileLayer** module:
+```javascript
+import { TileLayer } from 'vuelayers'
 
-- **ES6**: https://unpkg.com/vuelayers/lib/tile-layer/
+Vue.use(TileLayer)
+```
 
 ## Usage
 
@@ -30,7 +32,7 @@ and with [`vl-source-sputnik`](/docs/component/sputnik-source.md).
     
     <vl-layer-tile id="wmts">
       <vl-source-wmts :attributions="attribution" :url="url" :layer-name="layerName" :matrix-set="matrixSet" :format="format" 
-                      :style-name="styleName"></vl-source-image-static>
+                      :style-name="styleName"></vl-source-wmts>
     </vl-layer-tile>
   </vl-map>
 </template>
