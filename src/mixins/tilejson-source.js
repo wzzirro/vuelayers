@@ -11,8 +11,9 @@ export default {
   ],
   props: {
     // ol/source/TileJSON
-    tileJSON: Object,
+    tileJson: Object,
     url: String,
+    jsonp: Boolean,
     tileSize: {
       type: [Number, Array],
       default: () => [256, 256],
@@ -45,6 +46,9 @@ export default {
         crossOrigin: this.crossOrigin,
         reprojectionErrorThreshold: this.reprojectionErrorThreshold,
         tileClass: this.tileClass,
+        jsonp: this.jsonp,
+        tileJSON: this.tileJson,
+        url: this.url,
       })
     },
     .../*#__PURE__*/pick(tileImageSource.methods, [
