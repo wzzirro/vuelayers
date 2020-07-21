@@ -1,10 +1,10 @@
 <script>
-  import { tileJSONSource } from '../../mixins'
+  import { tileJsonSource } from '../../mixins'
 
   export default {
-    name: 'VlSourceTileJSON',
+    name: 'VlSourceTileJson',
     mixins: [
-      tileJSONSource,
+      tileJsonSource,
     ],
   }
 </script>
