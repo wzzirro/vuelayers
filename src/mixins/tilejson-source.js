@@ -46,6 +46,7 @@ export default {
         crossOrigin: this.crossOrigin,
         reprojectionErrorThreshold: this.reprojectionErrorThreshold,
         tileClass: this.tileClass,
+        // ol/source/TileJSON
         jsonp: this.jsonp,
         tileJSON: this.tileJson,
         url: this.url,
